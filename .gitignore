@@ -1,0 +1,10 @@
+# composer and friends
+composer.phar
+vendor/
+bin/
+
+# phpstorm
+.idea/
+
+# mac crap
+.DS_Store
