@@ -1,6 +1,8 @@
 {
     "require": {
-        "behat/behat": "2.4.*@stable"
+        "behat/behat": "2.4.*@stable",
+        "components/jquery": "dev-master",
+        "twitter/bootstrap": "3.3.*@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "4.6.*"

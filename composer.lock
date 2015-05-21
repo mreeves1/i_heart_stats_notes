@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "711ec7b5d4e1a3c80b82af8ab340731a",
+    "hash": "4c2c830ff34e326995c49c9b2070b791",
     "packages": [
         {
             "name": "behat/behat",
@@ -133,6 +133,48 @@
                 "parser"
             ],
             "time": "2013-03-02 10:38:40"
+        },
+        {
+            "name": "components/jquery",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jquery.git",
+                "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jquery/zipball/7b1d1104656a092423fbfba13c5920e9bbba290c",
+                "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.js"
+                    ],
+                    "files": [
+                        "jquery.min.js",
+                        "jquery.min.map",
+                        "jquery-migrate.js",
+                        "jquery-migrate.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Resig",
+                    "email": "jeresig@gmail.com"
+                }
+            ],
+            "description": "jQuery JavaScript Library",
+            "homepage": "http://jquery.com",
+            "time": "2015-05-08 05:04:47"
         },
         {
             "name": "symfony/config",
@@ -567,6 +609,57 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2015-05-12 15:16:46"
+        },
+        {
+            "name": "twitter/bootstrap",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twbs/bootstrap.git",
+                "reference": "7b9f204cb4b8fa5cb06b2a9233324997c093f629"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/7b9f204cb4b8fa5cb06b2a9233324997c093f629",
+                "reference": "7b9f204cb4b8fa5cb06b2a9233324997c093f629",
+                "shasum": ""
+            },
+            "replace": {
+                "twitter/bootstrap": "self.version"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Thornton",
+                    "email": "jacobthornton@gmail.com"
+                },
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
+                }
+            ],
+            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+            "homepage": "http://getbootstrap.com",
+            "keywords": [
+                "JS",
+                "css",
+                "framework",
+                "front-end",
+                "less",
+                "mobile-first",
+                "responsive",
+                "web"
+            ],
+            "time": "2015-05-03 02:06:59"
         }
     ],
     "packages-dev": [
@@ -1481,7 +1574,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "behat/behat": 0
+        "behat/behat": 0,
+        "components/jquery": 20,
+        "twitter/bootstrap": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
