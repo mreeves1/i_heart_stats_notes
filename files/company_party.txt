@@ -1,0 +1,51 @@
+Department	Location Preference
+human resources	park
+human resources	restaurant
+human resources	restaurant
+human resources	restaurant
+human resources	boss's house
+human resources	boss's house
+human resources	ice skating rink
+human resources	ice skating rink
+human resources	ice skating rink
+human resources	ice skating rink
+human resources	ice skating rink
+human resources	ice skating rink
+accounting	park
+accounting	park
+accounting	park
+accounting	restaurant
+accounting	restaurant
+accounting	restaurant
+accounting	boss's house
+accounting	boss's house
+accounting	boss's house
+accounting	boss's house
+accounting	boss's house
+accounting	boss's house
+accounting	boss's house
+accounting	ice skating rink
+accounting	ice skating rink
+accounting	ice skating rink
+customer service	park
+customer service	park
+customer service	park
+customer service	park
+customer service	park
+customer service	park
+customer service	park
+customer service	park
+customer service	restaurant
+customer service	restaurant
+customer service	restaurant
+customer service	restaurant
+customer service	boss's house
+customer service	boss's house
+customer service	ice skating rink
+customer service	ice skating rink
+customer service	ice skating rink
+customer service	ice skating rink
+customer service	ice skating rink
+customer service	ice skating rink
+customer service	ice skating rink
+customer service	ice skating rink

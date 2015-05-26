@@ -5,7 +5,7 @@ require __DIR__ . '/vendor/autoload.php';
   Class Chi {
     const FILES_DIR = 'files';
     const DS = DIRECTORY_SEPARATOR;
-    const DEBUG = true;
+    const DEBUG = false;
 
     private $independent_var;
     private $dependent_var;
@@ -108,7 +108,7 @@ require __DIR__ . '/vendor/autoload.php';
       }
     }
 
-    public function renderObservedValues($prefix = false) {
+    public function calculateObservedValues($prefix = false) {
       // TODO: Add prefix functionality where the indep/dep vars are prefixed onto rows/columns (aka yes/no = boring)
       $values = array();
       if (empty($this->independent_var) || empty($this->dependent_var) || empty($this->data)) {
@@ -157,19 +157,29 @@ require __DIR__ . '/vendor/autoload.php';
         $c_total[count($cols) - 1] = $grand_total;
         $values[] = $c_total;
         self::debugPrint($values, __METHOD__.", values");
+        return $values;
       }
     }
 
-  }
-  $c1 = new Chi();
-  $c1->inputFile('halloween.txt');
-  echo $c1->renderObservedValues();
+    public function renderTable($values) {
+      $html  = "<div class=\"table-responsive\">";
+      $html .=  "\t<table class=\"table table-bordered\">\n";
+      for ($i = 0; $i < count($values); $i++) {
+        $html .= "\t\t<tr>\n";
+        $j_max = count($values[$i]);
+        for ($j = 0; $j < $j_max; $j++) {
+          $html .= $i == 0 ? "\t\t\t<th>" : "\t\t\t<td>";
+          $html .= $values[$i][$j];
+          $html .= $i == 0 ? "</th>\n" : "</td>\n";
+        }
+        $html .= "\t\t</tr>\n";
+      }
+      $html .= "\t</table>\n";
+      $html .= "</div>\n";
+      return $html;
+    }
 
-  $c2 = new Chi();
-  $c2->inputFile('birthing.txt');
-  echo $c2->renderObservedValues();
-  echo "\n";
-  echo "chi square value for a significance level of .050 and df of 1 is ".Chi::getChiSquareCriticalValue('.050', 1).".";
+  }
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -184,7 +194,32 @@ require __DIR__ . '/vendor/autoload.php';
       </div>
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          TODO...
+          <?php
+          $c1 = new Chi();
+          echo "<h2>Halloween Rent vs. Own</h2>";
+          $c1->inputFile('halloween.txt');
+          $observedValues1 = $c1->calculateObservedValues();
+          echo $c1->renderTable($observedValues1);
+          echo "<br/>";
+
+          $c2 = new Chi();
+          echo "<h2>Birthing</h2>";
+          $c2->inputFile('birthing.txt');
+          $observedValues2 = $c2->calculateObservedValues();
+          echo $c2->renderTable($observedValues2);
+          echo "<br/>";
+
+          $c3 = new Chi();
+          echo "<h2>Company Party</h2>";
+          $c3->inputFile('company_party.txt');
+          $observedValues3 = $c3->calculateObservedValues();
+          echo $c3->renderTable($observedValues3);
+          echo "<br/>";
+
+          echo "chi square value for a significance level of .050 and df of 1 is ".Chi::getChiSquareCriticalValue('.050', 1).".";
+          echo "<br/>";
+          echo "<br/>";
+          ?>
         </div>
 
       </div>
