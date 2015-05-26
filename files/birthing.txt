@@ -1,0 +1,17 @@
+Education Level	Birthing Location
+college	birthing center
+college	hospital
+high school	birthing center
+college	hospital
+college	birthing center
+high school	hospital
+high school	hospital
+high school	hospital
+college	hospital
+high school	hospital
+high school	hospital
+college	home
+college	birthing center
+high school	hospital
+college	home
+high school	hospital

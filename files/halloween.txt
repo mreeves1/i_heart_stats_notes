@@ -1,0 +1,21 @@
+Own or Rent?	Decorate for Halloween?
+own	yes
+own	no
+own	yes
+own	yes
+own	yes
+rent	no
+own	no
+rent	no
+rent	no
+rent	yes
+own	yes
+own	no
+rent	no
+own	no
+own	yes
+own	yes
+own	yes
+own	yes
+own	yes
+rent	yes
