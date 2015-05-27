@@ -167,7 +167,7 @@ require __DIR__ . '/../vendor/autoload.php';
     }
 
     public function renderTable($values) {
-      $html  = "<div class=\"table-responsive\">";
+      $html  = "<div class=\"table-responsive\">\n";
       $html .=  "\t<table class=\"table table-bordered\">\n";
       for ($i = 0; $i < count($values); $i++) {
         $html .= "\t\t<tr>\n";
