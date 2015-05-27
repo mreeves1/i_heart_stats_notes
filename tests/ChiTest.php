@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-require 'Chi.php';
+# require __DIR__ . '/../classes/Chi.php';
 
 class ChiTest extends PHPUnit_Framework_TestCase {
   protected static $chi;
