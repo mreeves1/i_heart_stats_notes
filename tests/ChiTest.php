@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-# require __DIR__ . '/../classes/Chi.php';
 
 class ChiTest extends PHPUnit_Framework_TestCase {
+
   protected static $chi;
 
   public static function setUpBeforeClass() {
@@ -170,6 +170,5 @@ class ChiTest extends PHPUnit_Framework_TestCase {
 
     $this->assertEquals($out_actual, $out_expected);
   }
-
 
 }
