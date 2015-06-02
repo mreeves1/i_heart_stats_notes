@@ -10,6 +10,64 @@ require __DIR__ . '/../vendor/autoload.php';
     private $independent_var;
     private $dependent_var;
     private $data = array();
+    private $observed = array();
+    private $expected = array();
+    private $degrees_of_freedom = 0;
+    private $chi_sqr_values = array();
+    private $chi_sqr_solution = 0;
+    private static $chi_sqr_crit_val = 0;
+
+    /**
+     * @return array
+     */
+    public function getObserved()
+    {
+      return $this->observed;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExpected()
+    {
+      return $this->expected;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDegreesOfFreedom()
+    {
+      return $this->degrees_of_freedom;
+    }
+
+    /**
+     * @return array
+     */
+    public function getChiSqrValues()
+    {
+      return $this->chi_sqr_values;
+    }
+
+    /**
+     * @return int
+     */
+    public function getChiSqrSolution()
+    {
+      return $this->chi_sqr_solution;
+    }
+
+    /**
+     * @return int
+     */
+    public static function getChiSqrCritVal()
+    {
+      return self::$chi_sqr_crit_val;
+    }
+
+    public function getData() {
+      return $this->data;
+    }
 
     private function debugPrint($var, $label = null){
       if (self::DEBUG) {
@@ -18,10 +76,6 @@ require __DIR__ . '/../vendor/autoload.php';
         echo var_export($var, true);
         echo "</pre>\n";
       }
-    }
-
-    public function getData() {
-      return $this->data;
     }
 
     public function inputFile($f) {
@@ -38,7 +92,7 @@ require __DIR__ . '/../vendor/autoload.php';
       self::inputArray($a);
     }
 
-    public function inputArray($a) {
+    public function inputArray(array $a) {
       $data = array();
       for ($i = 0; $i < count($a); $i++) {
         // TODO: Validation checks?
@@ -67,7 +121,7 @@ require __DIR__ . '/../vendor/autoload.php';
      * @ref https://courses.edx.org/c4x/NotreDameX/SOC120x/asset/Chi_Square.pdf
      * @ref https://people.richland.edu/james/lecture/m170/tbl-chi.html
      */
-    static function getChiSquareTable($sig_level) {
+    public static function getChiSquareTable($sig_level) {
       // $a[significance level][degrees of freedom] = critical value
       $a = array();
       $a['.050'][1] = 3.841;
@@ -103,19 +157,21 @@ require __DIR__ . '/../vendor/autoload.php';
       }
     }
 
-    static function getChiSquareCriticalValue($sig_level, $degree_of_freedom) {
+    public function getChiSquareCriticalValue($sig_level, $degree_of_freedom) {
       $chi_square_table = self::getChiSquareTable($sig_level);
 
       if (!isset($chi_square_table[$degree_of_freedom])) {
         throw new Exception("Chi Square degree of freedom of $degree_of_freedom not found. Possible degrees of freedom are ".implode(", ", $chi_square_table[$degree_of_freedom]).".");
       } else {
-        return round($chi_square_table[$degree_of_freedom],3);
+        $chi_sqr_crit_val = round($chi_square_table[$degree_of_freedom],3);
+        self::$chi_sqr_crit_val = $chi_sqr_crit_val;
+        return $chi_sqr_crit_val;
       }
     }
 
     public function calculateObservedValues($prefix = false) {
       // TODO: Add prefix functionality where the indep/dep vars are prefixed onto rows/columns (aka yes/no = boring)
-      $values = array();
+      $observed = array();
       if (empty($this->independent_var) || empty($this->dependent_var) || empty($this->data)) {
         throw new Exception("Missing critical values. Run input methods first!");
       } else {
@@ -134,7 +190,7 @@ require __DIR__ . '/../vendor/autoload.php';
         sort($rows);
         self::debugPrint($rows, __METHOD__.", rows");
 
-        $values[] = $cols;
+        $observed[] = $cols;
         $c_total = array('total');
         $grand_total = 0;
         for ($r = 0; $r < count($rows); $r++) {
@@ -156,17 +212,18 @@ require __DIR__ . '/../vendor/autoload.php';
             }
           }
           $tmp[] = $r_total; // final column
-          $values[] = $tmp;
+          $observed[] = $tmp;
         }
         // Calculate grand total;
         $c_total[count($cols) - 1] = $grand_total;
-        $values[] = $c_total;
-        self::debugPrint($values, __METHOD__.", values");
-        return $values;
+        $observed[] = $c_total;
+        self::debugPrint($observed, __METHOD__.", values");
+        $this->observed = $observed;
+        return $observed;
       }
     }
 
-    public function calculateExpectedValues($observed) {
+    public function calculateExpectedValues(array $observed) {
       $expected = $observed;
       $expected[0][0] = 'EXPECTED';
       $i_max = count($observed) - 1;
@@ -177,10 +234,11 @@ require __DIR__ . '/../vendor/autoload.php';
           $expected[$i][$j] = $observed[$i][$j_max] * $observed[$i_max][$j] / $total;
         }
       }
+      $this->expected = $expected;
       return $expected;
     }
 
-    public function calculateChiSquareValues($observed, $expected) {
+    public function calculateChiSquareValues(array $observed, array $expected) {
       $i_max = count($observed) - 1;
       $j_max = count($observed[$i_max]) - 1;
       $values = array(array('OBSERVED', 'EXPECTED', 'O - E', '(O - E)^2', '(O - E)^2 / E'));
@@ -195,42 +253,36 @@ require __DIR__ . '/../vendor/autoload.php';
           $values[] = $tmp;
         }
       }
+      $this->chi_sqr_values = $values;
       return $values;
     }
 
-    public function calculateChiSquareSolution($values) {
+    public function calculateChiSquareSolution(array $values) {
       $solution = 0;
       for ($i = 1; $i < count($values); $i++) {
         $solution += $values[$i][4];
       }
+      $this->chi_sqr_solution = $solution;
       return $solution;
     }
 
-    public function calculateDegreesOfFreedom($expected_or_observed) {
+    public function calculateDegreesOfFreedom(array $expected_or_observed) {
       // -2 to remove "label" columns and rows
       $x = count($expected_or_observed[0]) - 2;
       $y = count($expected_or_observed) - 2;
       $df = ($y - 1) * ($x - 1);
+      $this->degrees_of_freedom = $df;
       return $df;
     }
 
-    public function renderTable($values) {
-      $html  = "<div class=\"table-responsive\">\n";
-      $html .=  "\t<table class=\"table table-bordered\">\n";
-      for ($i = 0; $i < count($values); $i++) {
-        $html .= "\t\t<tr>\n";
-        $j_max = count($values[$i]);
-        for ($j = 0; $j < $j_max; $j++) {
-          $html .= $i == 0 ? "\t\t\t<th>" : "\t\t\t<td>";
-          $html .= $values[$i][$j];
-          $html .= $i == 0 ? "</th>\n" : "</td>\n";
-        }
-        $html .= "\t\t</tr>\n";
-      }
-      $html .= "\t</table>\n";
-      $html .= "</div>\n";
-      return $html;
+    public function calculateAll() {
+      $observed = $this->calculateObservedValues();
+      $expected = $this->calculateExpectedValues($observed);
+      $degrees_of_freedom = $this->calculateDegreesOfFreedom($observed);
+      $chi_sqr_values = $this->calculateChiSquareValues($observed, $expected);
+      $chi_sqr_solution = $this->calculateChiSquareSolution($chi_sqr_values);
+      $chi_sqr_crit_value = $this->getChiSquareCriticalValue('.050', $degrees_of_freedom);
+      return ($chi_sqr_solution > $chi_sqr_crit_value);
     }
 
   }
-?>

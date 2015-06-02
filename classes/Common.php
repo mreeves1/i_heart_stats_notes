@@ -22,4 +22,30 @@ class Common {
     return round((array_sum($numbers)/count($numbers)), $sig_digits);
   }
 
+  public static function renderTable(array $values, $label = null) {
+    $html  = "<div class=\"table-responsive\">\n";
+    if (!empty($label)) {
+      $html .=  "\t<h4>$label</h4>\n";
+    }
+    $html .=  "\t<table class=\"table table-bordered\">\n";
+    for ($i = 0; $i < count($values); $i++) {
+      $html .= "\t\t<tr>\n";
+      $j_max = count($values[$i]);
+      for ($j = 0; $j < $j_max; $j++) {
+        $html .= $i == 0 ? "\t\t\t<th>" : "\t\t\t<td>";
+        $html .= $values[$i][$j];
+        $html .= $i == 0 ? "</th>\n" : "</td>\n";
+      }
+      $html .= "\t\t</tr>\n";
+    }
+    $html .= "\t</table>\n";
+    $html .= "</div>\n";
+    return $html;
+  }
+
+  public static function renderValue($value, $label) {
+    $html  = "<div><b>$label</b>: $value</div>\n";
+    return $html;
+  }
+
 }
