@@ -88,7 +88,7 @@ require __DIR__ . '/../vendor/autoload.php';
       while (($line = fgetcsv($fh, 1024, "\t")) !== false) {
         $a[] = $line;
       }
-
+      self::debugPrint($a, __METHOD__.", a");
       self::inputArray($a);
     }
 

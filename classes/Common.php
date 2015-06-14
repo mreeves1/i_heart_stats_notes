@@ -13,6 +13,7 @@ class Common {
     };
 
     $numbers_new = array_map($mean_diff_pow_func, $numbers);
+    # The -1 in the denominator is to remove the title column
     return round(sqrt((array_sum($numbers_new)/(count($numbers)-1))), $sig_digits);
   }
 
