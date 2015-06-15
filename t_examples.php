@@ -1,8 +1,7 @@
 <?php
 $page = 't_ex';
 
-require __DIR__ . '/classes/Chi.php';
-// require __DIR__ . '/classes/T.php';
+require __DIR__ . '/vendor/autoload.php';
 include_once __DIR__ . '/includes/header.php';
 ?>
 <div class="row">
@@ -10,10 +9,9 @@ include_once __DIR__ . '/includes/header.php';
     <?php
 
     // Problem 1:
-    $t1 = new Chi();
-    // $t1 = new T();
     echo "<h2>Men vs. Women Hair Care Product Count</h2>\n";
-    $t1->inputFile('t_hair_care.txt');
+    $data1 = T::inputFile('t_hair_care.txt', ",");
+    $t1 = new T($data1);
     echo Common::renderTable($t1->getData());
     echo "<br/>\n";
 

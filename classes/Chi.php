@@ -2,9 +2,9 @@
 // Calculate Chi Square for I Heart Stats Homework
 require __DIR__ . '/../vendor/autoload.php';
 
-  Class Chi {
-    const FILES_DIR = 'files';
-    const DS = DIRECTORY_SEPARATOR;
+  Class Chi extends Base
+  {
+
     const DEBUG = false;
 
     private $independent_var;
@@ -17,79 +17,52 @@ require __DIR__ . '/../vendor/autoload.php';
     private $chi_sqr_solution = 0;
     private static $chi_sqr_crit_val = 0;
 
+
+
     /**
      * @return array
      */
-    public function getObserved()
-    {
+    public function getObserved() {
       return $this->observed;
     }
 
     /**
      * @return array
      */
-    public function getExpected()
-    {
+    public function getExpected() {
       return $this->expected;
     }
 
     /**
      * @return int
      */
-    public function getDegreesOfFreedom()
-    {
+    public function getDegreesOfFreedom() {
       return $this->degrees_of_freedom;
     }
 
     /**
      * @return array
      */
-    public function getChiSqrValues()
-    {
+    public function getChiSqrValues() {
       return $this->chi_sqr_values;
     }
 
     /**
      * @return int
      */
-    public function getChiSqrSolution()
-    {
+    public function getChiSqrSolution() {
       return $this->chi_sqr_solution;
     }
 
     /**
      * @return int
      */
-    public static function getChiSqrCritVal()
-    {
+    public static function getChiSqrCritVal() {
       return self::$chi_sqr_crit_val;
     }
 
     public function getData() {
       return $this->data;
-    }
-
-    private function debugPrint($var, $label = null){
-      if (self::DEBUG) {
-        echo "<pre>";
-        if (!is_null($label)) echo "<b>$label:</b> \n";
-        echo var_export($var, true);
-        echo "</pre>\n";
-      }
-    }
-
-    public function inputFile($f) {
-      $file = self::FILES_DIR.self::DS.$f;
-      if (!is_file($file)) {
-        throw new Exception("File $f not found");
-      }
-      $fh = fopen($file,'r');
-      $a = array();
-      while (($line = fgetcsv($fh, 1024, "\t")) !== false) {
-        $a[] = $line;
-      }
-      self::debugPrint($a, __METHOD__.", a");
-      self::inputArray($a);
     }
 
     public function inputArray(array $a) {

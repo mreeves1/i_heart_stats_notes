@@ -24,6 +24,7 @@ class Common {
   }
 
   public static function renderTable(array $values, $label = null) {
+    var_dump($values);
     $html  = "<div class=\"table-responsive\">\n";
     if (!empty($label)) {
       $html .=  "\t<h4>$label</h4>\n";

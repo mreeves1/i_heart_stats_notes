@@ -1,7 +1,7 @@
 <?php
 $page = 'chi_calc';
 
-require __DIR__ . '/classes/Chi.php';
+require __DIR__ . '/vendor/autoload.php';
 include_once __DIR__ . '/includes/header.php';
 ?>
 <div class="row">
