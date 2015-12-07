@@ -8,3 +8,6 @@ bin/
 
 # mac crap
 .DS_Store
+
+# vagrant
+.vagrant
